@@ -5,6 +5,7 @@
          id="WebApp_ID" version="2.5">
 
     <display-name>Archetype Created Web Application</display-name>
+
     <!--过滤器配置-->
     <filter>
         <filter-name>characterEncodingFilter</filter-name>
@@ -45,8 +46,6 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
-
 
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
