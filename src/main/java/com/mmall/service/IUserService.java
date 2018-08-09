@@ -2,7 +2,6 @@ package com.mmall.service;
 
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
-import com.sun.org.apache.xpath.internal.operations.String;
 
 /**
  * Created by dxz on 2018/8/6.
@@ -14,6 +13,7 @@ public interface IUserService {
     ServerResponse<java.lang.String> register(User user);//注册
 
     ServerResponse<String> checkValid(String str, String type);//验证用户名和邮箱是否存在
+
 
 
 }

@@ -25,7 +25,6 @@ public class UserServiceImpl implements IUserService{
     /*用户登录登录
     **
      */
-    @Override
     public ServerResponse<User> login(String username, String password) {
         int resultCount = userMapper.checkUsername(username);//检查用户名是否存在
         if(resultCount == 0){
@@ -89,6 +88,6 @@ public class UserServiceImpl implements IUserService{
         return ServerResponse.createBySuccessMessage("校验成功");
     }
 
-    
+
 
 }
