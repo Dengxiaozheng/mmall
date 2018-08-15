@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 /**
  * Created by dxz on 2018/8/6.
  */
@@ -88,6 +90,30 @@ public class UserServiceImpl implements IUserService{
         return ServerResponse.createBySuccessMessage("校验成功");
     }
 
+    /*
+    获取找回密码提示问题
+     */
+    public ServerResponse selectQuestion(String username){
+        ServerResponse validResponse = this.checkValid(username, Const.USERNAME);
+        if(validResponse.isSuccess()){
+            //用户不存在
+            return ServerResponse.createByErrorMessage("用户不存在");
+        }
+        //用户存在，查找提示问题以找回密码
+        String question = userMapper.selectQuestionByUsername(username);
+        if(StringUtils.isNotBlank(question)){
+            return ServerResponse.createBySuccess(question);
+        }
+        return ServerResponse.createByErrorMessage("找回密码的问题是空的");
+    }
 
+    public ServerResponse<String> checkAnswer(String username, String question, String answer){
+        int resultCount = userMapper.checkAnswer(username, question, answer);
+        if(resultCount > 0){
+            String foegetToken = UUID.randomUUID().toString();
+
+        }
+        return null;
+    }
 
 }

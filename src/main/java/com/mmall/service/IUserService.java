@@ -14,6 +14,6 @@ public interface IUserService {
 
     ServerResponse<String> checkValid(String str, String type);//验证用户名和邮箱是否存在
 
-
+    ServerResponse selectQuestion(String username);//找回密码的提示问题
 
 }

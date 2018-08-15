@@ -80,6 +80,21 @@ public class UserController {
         return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
     }
 
+    /*
+    获取找回密码的提示问题
+     */
+    @RequestMapping(value = "forget_get_question.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetGetQuestion(String username){
+        return iUserService.selectQuestion(username);
+    }
+
+    /*
+    找回问题的答案是否正确
+     */
+    public ServerResponse<String> forgetCheckUnswer(String username, String question, String answer){
+        return null;
+    }
 
 }
 
