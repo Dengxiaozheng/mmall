@@ -12,8 +12,11 @@ public interface IUserService {
 
     ServerResponse<java.lang.String> register(User user);//注册
 
-    ServerResponse<String> checkValid(String str, String type);//验证用户名和邮箱是否存在
+    ServerResponse<String> checkValid(String str, String type);//验证用户名和邮箱是否存在*/
 
     ServerResponse selectQuestion(String username);//找回密码的提示问题
 
+    ServerResponse<String> checkAnswer(String username, String question, String answer);//检查答案是否正确
+
+    ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken);//忘记密码重置密码
 }

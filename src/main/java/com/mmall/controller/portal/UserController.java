@@ -40,7 +40,7 @@ public class UserController {
     }
 
     /*
-    * 用户注销
+    * 用户登出
     * */
     @RequestMapping(value = "logout.do", method = RequestMethod.GET)
     @ResponseBody
@@ -80,8 +80,9 @@ public class UserController {
         return ServerResponse.createByErrorMessage("用户未登录，无法获取当前用户的信息");
     }
 
+
     /*
-    获取找回密码的提示问题
+   忘记密码， 获取找回密码的提示问题
      */
     @RequestMapping(value = "forget_get_question.do", method = RequestMethod.GET)
     @ResponseBody
@@ -92,8 +93,19 @@ public class UserController {
     /*
     找回问题的答案是否正确
      */
+    @RequestMapping(value = "forget_check_answer.do", method = RequestMethod.GET)
+    @ResponseBody
     public ServerResponse<String> forgetCheckUnswer(String username, String question, String answer){
-        return null;
+        return iUserService.checkAnswer(username, question, answer);
+    }
+
+    /*
+    忘记密码，重置密码
+     */
+    @RequestMapping(value = "forget_reset_password.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken){
+        return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
     }
 
 }

@@ -27,5 +27,7 @@ public interface UserMapper {
 
     int checkAnswer(@Param("username")String username, @Param("question")String question, @Param("question")String answer);
 
+    int updatePasswordByUsername(@Param("username")String username, @Param("passwordNew")String passwordNew);
+
 
 }
