@@ -63,7 +63,7 @@ public class ServerResponse<T> implements Serializable{
         return msg;
     }
 
-    //fdsklafjlkfa
+    //
     public static <T> ServerResponse<T> createBySuccess()
     {
         return new ServerResponse<T>(ResponseCode.SUCCESS.getCode());
@@ -83,6 +83,8 @@ public class ServerResponse<T> implements Serializable{
     {
         return new ServerResponse<T>(ResponseCode.SUCCESS.getCode(), msg, data);
     }
+
+
 
     public static <T> ServerResponse<T> createByError()
     {
