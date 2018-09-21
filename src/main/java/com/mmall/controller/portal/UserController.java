@@ -108,6 +108,39 @@ public class UserController {
         return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
     }
 
+    /*
+    登录状态，重置密码
+     */
+    @RequestMapping(value = "reset_password.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<String> resetPassword(HttpSession session, String passwordOld, String passwordNew){
+
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return iUserService.resetPassword(passwordOld, passwordNew, user);
+    }
+
+    /*
+    登录状态等新用户信息
+    获取登录的相关信息，一定要传入session。user是要更新的用户信息，存储在user中
+     */
+    @RequestMapping(value = "update_information.do", method = RequestMethod.GET)
+    @ResponseBody
+    public ServerResponse<User> updateInformation(HttpSession session, User user){
+        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        if(currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        user.setId(currentUser.getId());//防止发生越权，将当前用户的id传进来
+        user.setUsername(currentUser.getUsername());//username也不能被更新
+        ServerResponse<User> response = iUserService.updateInformation(user);//获取登录用户信息，存入session，返回给服务下哪个赢对象
+        if(response.isSuccess()){
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        }
+        return response;
+    }
 }
 
 

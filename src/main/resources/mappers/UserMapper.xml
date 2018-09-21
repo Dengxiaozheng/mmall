@@ -196,5 +196,21 @@
     Where username = #{username}
 
   </update>
+  
+  <select id="checkPassword" resultType="int" parameterType="map">
 
+    SELECT
+    count(1)
+    from mmall_user
+    where usreId = #{userId}
+    and password = #{password}
+  </select>
+
+  <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    SELECT
+    count(1)
+    from mmall_user
+    where email = #{email}
+    and id != #{userId}
+  </select>
 </mapper>

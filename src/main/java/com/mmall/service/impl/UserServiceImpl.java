@@ -154,4 +154,53 @@ public class UserServiceImpl implements IUserService{
         return  ServerResponse.createByErrorMessage("修改密码失败");
 
     }
+
+
+    /*
+    登录状态，忘记密码
+    先获取旧密码，解开MD5，和传入的密码对比，如果正确则修改密码，如果错误则提示旧密码输入错误
+    防止横向越权，一定是这个用户的旧密码,所以要用ID号查找
+     */
+    public ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user){
+
+        int resultCount = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(passwordOld), user.getId());
+
+        if(resultCount == 0){
+            return ServerResponse.createByErrorMessage("旧密码错误");
+        }
+        user.setPassword(MD5Util.MD5EncodeUtf8(passwordNew));
+        int updateCount = userMapper.updateByPrimaryKeySelective(user);
+        if(updateCount > 0){
+            return ServerResponse.createBySuccessMessage("修改密码成功");
+        }
+        return ServerResponse.createByErrorMessage("更新失败");
+    }
+
+    /*
+    更新个人信息
+     */
+    public ServerResponse<User> updateInformation(User user){
+        //username不能被更新，检验email，新的是否存在，如果存在，不能是当前用户的？？
+        int resultCount = userMapper.checkEmailByUserId(user.getEmail(), user.getId());
+
+        if(resultCount > 0){
+            return  ServerResponse.createByErrorMessage("email已存在，请更换email再尝试更新");
+        }
+
+        User updateUser = new User();
+
+        //yuan原登录用户的id
+        updateUser.setId(user.getId());
+        //修改的数据
+        updateUser.setEmail(user.getEmail());
+        updateUser.setPhone(user.getPhone());
+        updateUser.setQuestion(user.getQuestion());
+        updateUser.setAnswer(user.getAnswer());
+
+        int updateCount = userMapper.updateByPrimaryKeySelective(updateUser);
+        if(updateCount > 0){
+            return ServerResponse.createBySuccess("更新个人信息成功", updateUser);
+        }
+        return ServerResponse.createByErrorMessage("更新个人信息失败");
+    }
 }
