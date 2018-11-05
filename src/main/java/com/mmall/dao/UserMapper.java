@@ -25,7 +25,7 @@ public interface UserMapper {
 
     String selectQuestionByUsername(String username);
 
-    int checkAnswer(@Param("username")String username, @Param("question")String question, @Param("question")String answer);
+    int checkAnswer(@Param("username")String username, @Param("question")String question);
 
     int updatePasswordByUsername(@Param("username")String username, @Param("passwordNew")String passwordNew);
 

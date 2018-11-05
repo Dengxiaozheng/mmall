@@ -186,9 +186,11 @@
     from mmall_user
     where username = #{username}
     and question = #{question}
-    and answer = #{answer}
 
   </select>
+  <!--and answer = #{answer}-->
+
+
 
   <update id="updatePasswordByUsername" parameterType="map">
     UPDATE mmall_user

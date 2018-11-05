@@ -115,8 +115,8 @@ public class UserServiceImpl implements IUserService{
     /*
     提交问题答案，如果答案正确，返回一个token，用于修改密码
      */
-    public ServerResponse<String> checkAnswer(String username, String question, String answer){
-        int resultCount = userMapper.checkAnswer(username, question, answer);//检查答案是否正确
+    public ServerResponse<String> checkAnswer(String username, String question){
+        int resultCount = userMapper.checkAnswer(username, question);//检查答案是否正确
         if(resultCount > 0){  //说明答案正确
             String forgetToken = UUID.randomUUID().toString();
             TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
@@ -124,6 +124,7 @@ public class UserServiceImpl implements IUserService{
         }
         return ServerResponse.createByErrorMessage("问题的答案错误");
     }
+
 
     /*
     重置密码
@@ -202,5 +203,15 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createBySuccess("更新个人信息成功", updateUser);
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
+    }
+
+
+    public ServerResponse<User> getInformation(Integer userId){
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null){
+            return ServerResponse.createByErrorMessage("找不到当前用户");
+        }
+        user.setPassword(StringUtils.EMPTY);//为什么要对密码置空
+        return ServerResponse.createBySuccess(user);
     }
 }

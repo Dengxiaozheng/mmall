@@ -16,11 +16,13 @@ public interface IUserService {
 
     ServerResponse selectQuestion(String username);//找回密码的提示问题
 
-    ServerResponse<String> checkAnswer(String username, String question, String answer);//检查答案是否正确
+    ServerResponse<String> checkAnswer(String username, String question);//检查答案是否正确
 
     ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken);//忘记密码重置密码
 
-    ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user);
+    ServerResponse<String> resetPassword(String passwordOld, String passwordNew, User user);//重置密码
 
-    ServerResponse<User> updateInformation(User user);
+    ServerResponse<User> updateInformation(User user);//更新个人信息
+
+    ServerResponse<User> getInformation(Integer userId);
 }
